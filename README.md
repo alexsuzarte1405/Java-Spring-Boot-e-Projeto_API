@@ -1,153 +1,64 @@
-# ☕ Java + Spring Boot | Projeto minha-primeira-api
+# Atividade individual — CRUD com Spring Boot e MongoDB
 
-## 📌 Sobre o projeto
+Projeto atualizado a partir do arquivo `demo-gravacao-mongodb.zip` enviado na atividade. Foram mantidos o nome, o pacote base `com.example.demo_gravacao_mongodb`, a classe principal e as dependências Maven originais (Spring Boot 4.1.1, Java 25, Spring Web MVC e Spring Data MongoDB).
 
-Este projeto faz parte dos estudos sobre **Java e Spring Boot**, com foco na criação de APIs REST e na comunicação entre diferentes sistemas.
+## Entidades
 
-### O que é Java?
-Java é uma linguagem de programação orientada a objetos, utilizada no desenvolvimento de sistemas, aplicativos e APIs. É conhecida por sua segurança, organização e capacidade de funcionar em diferentes plataformas.
+- **Estudante:** `id`, `nome`, `email`, `idade`.
+- **Curso:** `id`, `descricao`.
+- **Professor:** `id`, `nome`, `email`, `idade`.
 
-### O que é Spring Boot?
-Spring Boot é um framework que facilita o desenvolvimento de aplicações Java, permitindo criar APIs de forma mais rápida e organizada, com configurações simplificadas.
+Cada entidade tem Model, Repository que estende `MongoRepository`, e Controller com operações cadastrar, buscarTodos, buscarPorId, atualizar e excluir.
 
-### O que é o projeto minha-primeira-api?
-É um projeto de aprendizado que tem como finalidade conhecer a estrutura de uma API REST, entender como as requisições HTTP funcionam e como uma aplicação pode receber, processar e retornar informações.
+## Endpoints
 
-## 🎯 Objetivo
+| Método | Estudante | Curso | Professor |
+| --- | --- | --- | --- |
+| POST | `/estudantes` | `/cursos` | `/professores` |
+| GET todos | `/estudantes` | `/cursos` | `/professores` |
+| GET por ID | `/estudantes/{id}` | `/cursos/{id}` | `/professores/{id}` |
+| PUT | `/estudantes/{id}` | `/cursos/{id}` | `/professores/{id}` |
+| DELETE | `/estudantes/{id}` | `/cursos/{id}` | `/professores/{id}` |
 
-Compreender os conceitos básicos de Java e Spring Boot, conhecer a estrutura de uma API REST e aprender como os métodos HTTP são utilizados para realizar operações de cadastro, consulta, atualização e exclusão de informações.
+Cadastro retorna 201, consulta e atualização bem-sucedidas retornam 200, exclusão retorna 204 e busca/atualização/exclusão de registros inexistentes retornam 404.
 
-## ⚙️ Principais funcionalidades
+## Como rodar
 
-| Método / Recurso | Funcionalidade |
-|---|---|
-| GET | Consultar informações |
-| POST | Cadastrar novos registros |
-| PUT | Atualizar informações |
-| DELETE | Excluir registros |
-| @RestController | Definir controladores da API |
-| @GetMapping | Criar endpoints de consulta |
-| @PostMapping | Criar endpoints de cadastro |
-| @PutMapping | Criar endpoints de atualização |
-| @DeleteMapping | Criar endpoints de exclusão |
-| @RequestMapping | Definir caminhos das requisições |
+1. Instale **JDK 25** (como definido pelo `pom.xml` original), Maven ou use o Maven Wrapper, e MongoDB.
+2. Inicie o MongoDB local na porta 27017; a aplicação usa o banco `atividade_crud`. Para usar outra conexão, configure a variável de ambiente `MONGODB_URI`.
+3. Na pasta raiz do projeto, execute no Windows: `mvnw.cmd spring-boot:run` (ou `mvn spring-boot:run` se possuir Maven). No Linux/macOS: `./mvnw spring-boot:run`.
+4. Importe `postman/CRUD-Estudantes-Cursos-Professores.postman_collection.json` no Postman, ajuste `baseUrl` caso necessário e envie as requisições.
 
-## 🔗 Exemplos de endpoints
+## Exemplos de JSON
 
-Os endpoints representam os endereços utilizados para acessar os recursos de uma API.
-
-Considerando um sistema de cadastro de produtos:
-
-| Método | Endpoint | Descrição |
-|---|---|---|
-| GET | `/produtos` | Listar produtos |
-| GET | `/produtos/1` | Consultar produto pelo ID |
-| POST | `/produtos` | Cadastrar produto |
-| PUT | `/produtos/1` | Atualizar produto |
-| DELETE | `/produtos/1` | Excluir produto |
-
-### 💻 Exemplo de requisição
-
-**Método:** GET
-
-**Endereço:** `http://localhost:8080/produtos`
-
-**Exemplo de resposta JSON:**
-
+Estudante:
 ```json
-[
-  {
-    "id": 1,
-    "nome": "Notebook",
-    "preco": 3500.00
-  },
-  {
-    "id": 2,
-    "nome": "Mouse",
-    "preco": 80.00
-  }
-]
+{"id":"1","nome":"João da Silva","idade":30,"email":"joao.silva@email.com"}
+```
+Curso:
+```json
+{"id":"curso1","descricao":"Sistemas de Informação"}
+```
+Professor:
+```json
+{"id":"prof1","nome":"Maria Oliveira","idade":42,"email":"maria@email.com"}
 ```
 
-Esse exemplo demonstra como uma API pode retornar uma lista de produtos em formato JSON.
+## Enviar ao GitHub
 
-> **Observação:** os endpoints e os dados apresentados são exemplos didáticos, não uma confirmação de funcionalidades implementadas no projeto.
-
-## 📚 Conhecimentos adquiridos
-
-### 1. Estrutura do Spring Boot
-
-Importância da organização dos componentes de uma aplicação:
-
-- **Controller:** responsável por receber requisições HTTP.
-- **Service:** organiza as regras de negócio.
-- **Repository:** realiza operações de acesso aos dados.
-- **Model:** representa as informações utilizadas pelo sistema.
-- **application.properties:** permite configurar a aplicação.
-
-### 2. Funcionamento de uma API REST
-
-Uma API permite a comunicação entre aplicações por meio de requisições HTTP.
-
-Quando um sistema solicita informações, a API recebe a requisição, realiza o processamento necessário e retorna uma resposta.
-
-### 3. Códigos de resposta HTTP
-
-Alguns códigos utilizados para informar o resultado das requisições:
-
-| Código | Significado |
-|---|---|
-| 200 | Requisição realizada com sucesso |
-| 201 | Recurso criado |
-| 400 | Requisição inválida |
-| 404 | Recurso não encontrado |
-| 500 | Erro interno do servidor |
-
-### 4. Utilização do JSON
-
-JSON é um formato utilizado para organizar e transmitir informações entre aplicações.
-
-Exemplo:
-
-```json
-{
-  "id": 1,
-  "nome": "Notebook",
-  "preco": 3500.00,
-  "disponivel": true
-}
+Na pasta do projeto, em terminal com Git configurado:
+```bash
+git init
+git add .
+git commit -m "Implementar CRUD de Estudantes, Cursos e Professores"
+git branch -M main
+git remote add origin https://github.com/SEU-USUARIO/SEU-REPOSITORIO.git
+git push -u origin main
 ```
+Crie o repositório no GitHub antes de executar `git push`. Se o projeto já tiver um repositório Git, use o fluxo já configurado sem repetir `git init`/`git remote add`.
 
-### 5. Conceito de CRUD
+## Postman
 
-CRUD representa quatro operações fundamentais utilizadas em sistemas:
+A coleção contém todas as 15 requisições. Para sincronizá-la à sua conta, entre no Postman e importe o arquivo JSON em um workspace. O arquivo local não cria conta nem publica automaticamente as collections.
 
-- **Create:** criar informações.
-- **Read:** consultar registros.
-- **Update:** atualizar informações.
-- **Delete:** excluir registros.
-
-### 6. Testes de APIs
-
-A importância de executar a aplicação em ambiente local e testar os endpoints para verificar se as requisições estão funcionando corretamente.
-
-A utilidade de ferramentas como o Postman para enviar requisições HTTP e visualizar as respostas.
-
-### 7. Organização e boas práticas
-
-A importância de manter o código organizado, utilizar nomes claros para classes e métodos e separar as responsabilidades de cada componente.
-
-Essas práticas facilitam a manutenção, a identificação de erros e a evolução dos sistemas.
-
-## 🛠️ Tecnologias e ferramentas estudadas
-
-- Java
-- Spring Boot
-- Spring Initializr
-- Maven
-- API REST
-- HTTP
-- JSON
-- Postman
-- Git e GitHub
-
+**Nota:** o ZIP original não continha Model, Repository ou Controller de Estudante; essas classes foram construídas tomando como referência o padrão de cadastro e as especificações do enunciado. O projeto ainda precisa ser compilado e testado em um ambiente com JDK 25 e MongoDB.
